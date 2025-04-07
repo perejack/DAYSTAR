@@ -1,0 +1,247 @@
+import { Users, Target, GraduationCap, Globe2, BarChart, Award, BookOpen, Brain, Rocket, FileSpreadsheet, Network, HandHeart, LineChart } from 'lucide-react';
+
+interface Specialization {
+  icon: any;
+  title: string;
+  description: string;
+}
+
+const specializations: Specialization[] = [
+  {
+    icon: Rocket,
+    title: "Strategic Management & Innovation",
+    description: "Advanced research in organizational strategy and innovation management"
+  },
+  {
+    icon: Users,
+    title: "Human Resource Management",
+    description: "Research in human capital and organizational development"
+  },
+  {
+    icon: LineChart,
+    title: "Finance",
+    description: "Advanced financial theory and research"
+  }
+];
+
+const keyFeatures = [
+  {
+    icon: Globe2,
+    title: "Global Research",
+    description: "International business perspective"
+  },
+  {
+    icon: Brain,
+    title: "Academic Excellence",
+    description: "Rigorous research methodology"
+  },
+  {
+    icon: Network,
+    title: "Collaborative Environment",
+    description: "Expert faculty mentorship"
+  },
+  {
+    icon: GraduationCap,
+    title: "Research Impact",
+    description: "Contribute to business theory"
+  }
+];
+
+const researchAreas = [
+  {
+    icon: Rocket,
+    title: "Innovation Management",
+    description: "Study organizational innovation"
+  },
+  {
+    icon: Users,
+    title: "Leadership Development",
+    description: "Research in leadership effectiveness"
+  },
+  {
+    icon: BarChart,
+    title: "Business Analytics",
+    description: "Advanced data analysis"
+  },
+  {
+    icon: FileSpreadsheet,
+    title: "Policy Research",
+    description: "Business policy development"
+  }
+];
+
+const PhdBusiness = () => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="relative h-[400px]">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1920&q=80"
+            alt="PhD in Business Administration"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="relative h-full flex items-center justify-center text-center">
+          <div className="max-w-4xl mx-auto px-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 drop-shadow-lg">
+              PhD in Business Administration
+            </h1>
+            <p className="text-xl text-white mb-8 drop-shadow-lg">
+              Advanced research and innovation in business administration
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <button className="bg-white text-[#00BFFF] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                Apply Now
+              </button>
+              <button className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors">
+                Download Brochure
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {keyFeatures.map((feature, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+              <div className="flex items-center space-x-4">
+                <div className="bg-[#00BFFF]/10 p-3 rounded-lg">
+                  <feature.icon className="w-6 h-6 text-[#00BFFF]" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">{feature.title}</h3>
+                  <p className="text-sm text-gray-600">{feature.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Content */}
+          <div className="lg:col-span-2">
+            {/* About Section */}
+            <div className="bg-white rounded-xl shadow-md p-8 mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Program Overview</h2>
+              <div className="prose max-w-none text-gray-600">
+                <p>
+                  The PhD in Business Administration at Daystar University is an advanced research degree designed for those seeking to contribute to business theory and practice through rigorous academic research.
+                </p>
+                <p className="mt-4">
+                  Our program offers specialized tracks in Strategic Management & Innovation, Human Resource Management, and Finance, allowing students to pursue in-depth research in their area of interest.
+                </p>
+                <p className="mt-4">
+                  Through collaboration with expert faculty and a diverse cohort of doctoral candidates, students develop the skills needed to conduct original research that advances business knowledge and practice.
+                </p>
+              </div>
+            </div>
+
+            {/* Specializations */}
+            <div className="bg-white rounded-xl shadow-md p-8 mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Specializations</h2>
+              <div className="grid grid-cols-1 gap-6">
+                {specializations.map((spec, index) => (
+                  <div key={index} className="flex items-start space-x-4">
+                    <div className="bg-[#00BFFF]/10 p-3 rounded-lg mt-1">
+                      <spec.icon className="w-5 h-5 text-[#00BFFF]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">{spec.title}</h3>
+                      <p className="text-sm text-gray-600">{spec.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Research Areas */}
+            <div className="bg-white rounded-xl shadow-md p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Research Areas</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {researchAreas.map((area, index) => (
+                  <div key={index} className="flex items-start space-x-4">
+                    <div className="bg-[#00BFFF]/10 p-3 rounded-lg mt-1">
+                      <area.icon className="w-5 h-5 text-[#00BFFF]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">{area.title}</h3>
+                      <p className="text-sm text-gray-600">{area.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Sidebar */}
+          <div className="space-y-6">
+            {/* Entry Requirements */}
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-6">Entry Requirements</h3>
+              <ul className="space-y-4">
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#00BFFF]/10 p-2 rounded-lg mt-1">
+                    <Award className="w-4 h-4 text-[#00BFFF]" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Master's degree in Business (MBA, MSc, MA in Economics)</p>
+                  </div>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#00BFFF]/10 p-2 rounded-lg mt-1">
+                    <BookOpen className="w-4 h-4 text-[#00BFFF]" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Minimum GPA of 3.00 on a 4.00 scale (or equivalent B grade)</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Values */}
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-6">Our Values</h3>
+              <ul className="space-y-4">
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#00BFFF]/10 p-2 rounded-lg mt-1">
+                    <Award className="w-4 h-4 text-[#00BFFF]" />
+                  </div>
+                  <p className="text-sm text-gray-600">Excellence in research</p>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#00BFFF]/10 p-2 rounded-lg mt-1">
+                    <HandHeart className="w-4 h-4 text-[#00BFFF]" />
+                  </div>
+                  <p className="text-sm text-gray-600">Transformation through discovery</p>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#00BFFF]/10 p-2 rounded-lg mt-1">
+                    <Target className="w-4 h-4 text-[#00BFFF]" />
+                  </div>
+                  <p className="text-sm text-gray-600">Development of thought leaders</p>
+                </li>
+              </ul>
+            </div>
+
+            {/* Call to Action */}
+            <div className="bg-[#00BFFF] rounded-xl shadow-md p-6 text-white">
+              <h3 className="text-xl font-bold mb-4">Ready to Get Started?</h3>
+              <p className="mb-6">Begin your doctoral journey at Daystar University.</p>
+              <button className="w-full bg-white text-[#00BFFF] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                Start Application
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PhdBusiness;
