@@ -78,27 +78,32 @@ function App() {
     {
       name: 'PhD',
       path: '/programs#phd',
-      description: 'Doctoral Programs'
+      description: 'Doctoral Programs',
+      icon: GraduationCap
     },
     {
       name: 'Masters',
       path: '/programs#masters',
-      description: 'Masters Programs'
+      description: 'Masters Programs',
+      icon: BookOpen
     },
     {
       name: 'Bachelors',
       path: '/programs#bachelors',
-      description: 'Undergraduate Programs'
+      description: 'Undergraduate Programs',
+      icon: ScrollText
     },
     {
       name: 'Diploma',
       path: '/programs#diploma',
-      description: 'Diploma Programs'
+      description: 'Diploma Programs',
+      icon: Award
     },
     {
       name: 'Certificate',
       path: '/programs#certificate',
-      description: 'Certificate Programs'
+      description: 'Certificate Programs',
+      icon: Certificate
     }
   ];
   
@@ -179,7 +184,9 @@ function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">
               <div className="flex items-center">
-                <Link to="/" className="text-2xl font-bold text-[#00BFFF]">Daystar</Link>
+                <Link to="/" className="text-2xl font-bold">
+                  <img src="https://www.daystar.ac.ke/images/logo.png" alt="Daystar University Logo" className="h-12" />
+                </Link>
               </div>
 
               <div className="hidden md:flex items-center space-x-8">
@@ -279,15 +286,31 @@ function App() {
                 </Swiper>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-10">
-                  <div className="bg-white rounded-lg shadow-lg p-6 grid grid-cols-2 md:grid-cols-5 gap-4">
+                  <div className="h-32"></div> {/* Spacer to move content lower */}
+                  <div className="text-center mb-6 bg-gradient-to-r from-[#00BFFF]/10 via-white to-[#00BFFF]/10 rounded-lg p-4 shadow-sm">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">Explore Our Academic Programs</h2>
+                    <div className="flex items-center justify-center gap-2 text-[#00BFFF] animate-pulse">
+                      <MessageCircle size={20} />
+                      <p className="text-sm font-medium">Click on any category below to view programs and apply</p>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-2xl shadow-xl p-8 grid grid-cols-2 md:grid-cols-5 gap-6">
                     {programCategories.map((category) => (
                       <Link
                         key={category.name}
                         to={category.path}
-                        className="text-center p-4 hover:bg-[#00BFFF] hover:text-white rounded-lg transition-all duration-300 group flex flex-col items-center justify-center space-y-2"
+                        className="group relative overflow-hidden bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-lg hover:border-[#00BFFF] transition-all duration-300 flex flex-col items-center justify-center space-y-3"
                       >
-                        <span className="text-lg font-semibold group-hover:text-white text-gray-800">{category.name}</span>
-                        <span className="text-sm text-gray-500 group-hover:text-white/90">{category.description}</span>
+                        <div className="w-12 h-12 rounded-full bg-[#00BFFF]/10 flex items-center justify-center group-hover:bg-[#00BFFF] transition-colors duration-300">
+                          {category.icon && <category.icon className="w-6 h-6 text-[#00BFFF] group-hover:text-white transition-colors duration-300" />}
+                        </div>
+                        <span className="text-lg font-semibold text-gray-800 group-hover:text-[#00BFFF] transition-colors duration-300">
+                          {category.name}
+                        </span>
+                        <span className="text-sm text-gray-500 text-center">
+                          {category.description}
+                        </span>
+                        <div className="absolute bottom-0 left-0 h-1 bg-[#00BFFF] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 w-full" />
                       </Link>
                     ))}
                   </div>
