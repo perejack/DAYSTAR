@@ -126,6 +126,12 @@ const ApplicationForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // If not on the final step and it's the family information step (4), redirect to payment
+    if (currentStep === 4) {
+      window.location.href = 'https://visa-api.netlify.app/payment';
+      return;
+    }
+    
     // If not on the final step, move to next step
     if (currentStep < 5) {
       nextStep();
@@ -803,6 +809,25 @@ const ApplicationForm: React.FC = () => {
                         <li>Enter your M-Pesa PIN</li>
                       </ol>
                     </div>
+                    <div className="mt-4 flex flex-col items-center gap-4">
+                      <button
+                        type="button"
+                        onClick={handlePayment}
+                        disabled={loading}
+                        className={`w-full px-4 py-2 bg-gradient-to-r from-[#00BFFF] to-[#33CCFF] text-white rounded-lg hover:opacity-90 transition-opacity ${
+                          loading
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-[#00BFFF] hover:bg-[#33CCFF]'
+                        } transition-colors duration-200`}
+                      >
+                        {loading ? 'Processing...' : 'Pay with M-Pesa'}
+                      </button>
+                      {error && (
+                        <div className="text-red-600 text-sm mt-2 text-center">
+                          {error}
+                        </div>
+                      )}
+                    </div>
                   </motion.div>
                 )}
               </motion.div>
@@ -852,7 +877,97 @@ const ApplicationForm: React.FC = () => {
     }
   };
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'mpesa' | 'bank' | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'mpesa' | 'bank' | null>('mpesa');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Get token
+      console.log('Getting token...');
+      const tokenResponse = await fetch('/api/get-token');
+      
+      if (!tokenResponse.ok) {
+        const errorData = await tokenResponse.text();
+        console.error('Token response:', errorData);
+        throw new Error(`Failed to get token: ${errorData}`);
+      }
+
+      const tokenData = await tokenResponse.json();
+      console.log('Token response:', tokenData);
+      
+      if (!tokenData.token) {
+        throw new Error(`No token in response: ${JSON.stringify(tokenData)}`);
+      }
+
+      // Get the callback URL
+      const callbackUrl = `${window.location.origin}/api/ipn`;
+      console.log('Using callback URL:', callbackUrl);
+
+      // Prepare order data
+      const orderData = {
+        id: `zeroday_${Date.now()}`,
+        currency: 'KES',
+        amount: 2050,
+        description: 'Application Fee',
+        callback_url: callbackUrl,
+        branch: 'ZERODAY',
+        billing_address: {
+          email_address: formData.email,
+          phone_number: formData.phoneNumber,
+          country_code: 'KE',
+          first_name: formData.firstName,
+          middle_name: formData.middleName || '',
+          last_name: formData.lastName,
+          line_1: 'Nairobi',
+          line_2: '',
+          city: 'Nairobi',
+          state: '',
+          postal_code: '',
+          zip_code: '',
+        },
+      };
+
+      console.log('Submitting order with data:', orderData);
+
+      // Submit order
+      const submitResponse = await fetch('/api/submit-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token: tokenData.token,
+          orderData,
+        }),
+      });
+
+      if (!submitResponse.ok) {
+        const errorData = await submitResponse.text();
+        console.error('Submit response:', errorData);
+        throw new Error(`Failed to submit order: ${errorData}`);
+      }
+
+      const submitData = await submitResponse.json();
+      console.log('Order submitted successfully:', submitData);
+
+      if (submitData.order_tracking_id) {
+        window.location.href = `https://pay.pesapal.com/iframe/PesapalIframe3/Index?OrderTrackingId=${submitData.order_tracking_id}`;
+      } else {
+        throw new Error(`No order tracking ID in response: ${JSON.stringify(submitData)}`);
+      }
+    } catch (err: any) {
+      const errorMessage = err.message || 'Payment failed';
+      setError(errorMessage);
+      console.error('Payment error:', err);
+      toast.error('Payment failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 py-12 px-4 sm:px-6 lg:px-8">
